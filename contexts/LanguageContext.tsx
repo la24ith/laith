@@ -12,6 +12,10 @@ interface LanguageContextType {
   dir: 'ltr' | 'rtl';
 }
 
+// تعريف نوع الترجمة
+type TranslationKey = keyof typeof translations.en;
+type TranslationValue = string; // جميع القيم من نوع string
+
 const translations = {
   en: {
     'nav.about': 'About',
@@ -24,7 +28,6 @@ const translations = {
     'nav.contact': 'Contact',
     'nav.hire': 'Hire Me',
     
-    // Hero
     'hero.badge': 'Available for Freelance',
     'hero.title': 'Building',
     'hero.title.gradient': 'Cross-Platform Apps',
@@ -36,7 +39,6 @@ const translations = {
     'hero.stats.experience': 'Years Experience',
     'hero.stats.clients': 'Happy Clients',
 
-    // About
     'about.title': 'About Me',
     'about.subtitle': 'Passionate Flutter developer dedicated to building exceptional mobile experiences',
     'about.role': 'Senior Flutter Developer',
@@ -55,7 +57,6 @@ const translations = {
     'about.support.qa': 'QA Engineering',
     'about.support.it': 'IT Support',
 
-    // Skills
     'skills.title': 'Skills & Technologies',
     'skills.subtitle': 'Technologies and tools I work with to build modern mobile applications',
     'skills.primary': 'Core Technologies',
@@ -64,29 +65,21 @@ const translations = {
     'skills.tools': 'Development Tools',
     'skills.primary.tag': 'Expert',
 
-    // Experience
     'experience.title': 'Experience',
     'experience.subtitle': 'My professional journey in software development',
     'experience.current': 'Current',
     'experience.octo': 'Flutter Developer at OCTO Tech',
     'experience.octo.desc': 'Building cross-platform Flutter applications with Clean Architecture and modern state management.',
-    'experience.octo.responsibilities': [
-      'Developing cross-platform mobile apps with Flutter',
-      'Implementing Clean Architecture and BLoC patterns',
-      'Integrating REST APIs and Firebase services',
-      'Optimizing app performance and user experience'
-    ],
+    'experience.octo.responsibilities': 'Developing cross-platform mobile apps with Flutter, Implementing Clean Architecture and BLoC patterns, Integrating REST APIs and Firebase services, Optimizing app performance and user experience',
     'experience.qa': 'QA & Testing Engineer',
     'experience.it': 'IT Support Specialist',
     'experience.education': 'University Education',
     'experience.university': 'Computer Science & Software Engineering',
 
-    // Projects
     'projects.title': 'Projects',
     'projects.subtitle': 'Some of the projects I have worked on recently',
     'projects.viewAll': 'View All Projects',
 
-    // Services
     'services.title': 'Services',
     'services.subtitle': 'What I can do for you',
     'services.app': 'Mobile App Development',
@@ -102,24 +95,20 @@ const translations = {
     'services.team': 'Team Training',
     'services.team.desc': 'Training development teams on Flutter best practices and modern development workflows.',
 
-    // Testimonials
     'testimonials.title': 'Testimonials',
     'testimonials.subtitle': 'What people say about working with me',
 
-    // GitHub
     'github.title': 'GitHub',
     'github.subtitle': 'Open source contributions and projects',
     'github.view': 'View All',
     'github.repos': 'Repositories',
     'github.contributions': 'Contributions',
 
-    // CTA
     'cta.title': 'Ready to Build Something Great?',
     'cta.subtitle': 'Let\'s discuss your next mobile project. I\'m available for freelance work.',
     'cta.consult': 'Book Consultation',
     'cta.contact': 'Contact Me',
 
-    // Contact
     'contact.title': 'Contact',
     'contact.subtitle': 'Get in touch for your next project',
     'contact.email': 'Email',
@@ -132,7 +121,6 @@ const translations = {
     'contact.send': 'Send Message',
     'contact.note': 'I\'ll get back to you within 24 hours',
 
-    // Footer
     'footer.home': 'Home',
     'footer.about': 'About',
     'footer.skills': 'Skills',
@@ -143,7 +131,6 @@ const translations = {
     'footer.quickLinks': 'Quick Links',
     'footer.rights': 'All rights reserved',
 
-    // Blog
     'blog.title': 'Blog',
   },
   ar: {
@@ -199,12 +186,7 @@ const translations = {
     'experience.current': 'الحالي',
     'experience.octo': 'مطور Flutter في OCTO Tech',
     'experience.octo.desc': 'بناء تطبيقات متعددة المنصات باستخدام Flutter مع Clean Architecture وإدارة الحالة الحديثة.',
-    'experience.octo.responsibilities': [
-      'تطوير تطبيقات متعددة المنصات باستخدام Flutter',
-      'تنفيذ Clean Architecture وأنماط BLoC',
-      'دمج REST APIs وخدمات Firebase',
-      'تحسين أداء التطبيق وتجربة المستخدم'
-    ],
+    'experience.octo.responsibilities': 'تطوير تطبيقات متعددة المنصات باستخدام Flutter, تنفيذ Clean Architecture وأنماط BLoC, دمج REST APIs وخدمات Firebase, تحسين أداء التطبيق وتجربة المستخدم',
     'experience.qa': 'مهندس ضمان جودة واختبارات',
     'experience.it': 'أخصائي دعم تقني',
     'experience.education': 'التعليم الجامعي',
@@ -269,6 +251,11 @@ const translations = {
   }
 };
 
+// تعريف نوع صحيح للترجمات
+type Translations = typeof translations;
+type LanguageKey = keyof Translations;
+type TranslationKey = keyof Translations['en'];
+
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
@@ -276,7 +263,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const savedLanguage = localStorage.getItem('language') as Language;
-    if (savedLanguage) {
+    if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'ar')) {
       setLanguage(savedLanguage);
     }
   }, []);
@@ -288,8 +275,10 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     document.documentElement.lang = lang;
   };
 
+  // ✅ دالة الترجمة مع تحديد النوع الصحيح
   const t = (key: string): string => {
-    return translations[language][key as keyof typeof translations.en] || key;
+    const translation = translations[language as LanguageKey];
+    return translation[key as TranslationKey] || key;
   };
 
   const dir = language === 'ar' ? 'rtl' : 'ltr';
