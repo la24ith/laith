@@ -17,9 +17,7 @@
     --dart-violet: #7c5cfc;
   }
 
-  * {
-    @apply border-border;
-  }
+
 
   body {
     @apply bg-[#0a0e14] text-[#e8f4ff] font-sans antialiased;
