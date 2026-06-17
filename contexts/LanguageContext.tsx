@@ -12,10 +12,6 @@ interface LanguageContextType {
   dir: 'ltr' | 'rtl';
 }
 
-// تعريف نوع الترجمة
-type TranslationKey = keyof typeof translations.en;
-type TranslationValue = string; // جميع القيم من نوع string
-
 const translations = {
   en: {
     'nav.about': 'About',
@@ -105,7 +101,7 @@ const translations = {
     'github.contributions': 'Contributions',
 
     'cta.title': 'Ready to Build Something Great?',
-    'cta.subtitle': 'Let\'s discuss your next mobile project. I\'m available for freelance work.',
+    'cta.subtitle': "Let's discuss your next mobile project. I'm available for freelance work.",
     'cta.consult': 'Book Consultation',
     'cta.contact': 'Contact Me',
 
@@ -119,7 +115,7 @@ const translations = {
     'contact.email.label': 'Your Email',
     'contact.message': 'Message',
     'contact.send': 'Send Message',
-    'contact.note': 'I\'ll get back to you within 24 hours',
+    'contact.note': "I'll get back to you within 24 hours",
 
     'footer.home': 'Home',
     'footer.about': 'About',
@@ -251,10 +247,8 @@ const translations = {
   }
 };
 
-// تعريف نوع صحيح للترجمات
-type Translations = typeof translations;
-type LanguageKey = keyof Translations;
-type TranslationKey = keyof Translations['en'];
+// ✅ تعريف الأنواع مرة واحدة فقط
+type TranslationKey = keyof typeof translations.en;
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
@@ -277,7 +271,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   // ✅ دالة الترجمة مع تحديد النوع الصحيح
   const t = (key: string): string => {
-    const translation = translations[language as LanguageKey];
+    const translation = translations[language];
     return translation[key as TranslationKey] || key;
   };
 
