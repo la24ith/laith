@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { Inter, Cairo, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { LanguageProvider } from '@/contexts/LanguageContext';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import Navbar from '@/components/sections/Navbar';
+import Footer from '@/components/sections/Footer';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const cairo = Cairo({ subsets: ['arabic'], variable: '--font-cairo' });
