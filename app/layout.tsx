@@ -1,93 +1,135 @@
-// app/globals.css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+import type { Metadata } from 'next';
+import { Inter, Cairo, JetBrains_Mono } from 'next/font/google';
+import './globals.css';
+import { LanguageProvider } from '@/contexts/LanguageContext';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
-@layer base {
-  :root {
-    --bg: #0a0e14;
-    --bg-elevated: #10151f;
-    --bg-card: #11171f;
-    --line: rgba(255,255,255,0.08);
-    --line-strong: rgba(255,255,255,0.14);
-    --text: #e8f4ff;
-    --text-dim: #9aa7b8;
-    --text-faint: #5f6b7d;
-    --flutter-blue: #0468d7;
-    --flutter-cyan: #27c6da;
-    --dart-violet: #7c5cfc;
-  }
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const cairo = Cairo({ subsets: ['arabic'], variable: '--font-cairo' });
+const jetbrains = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
 
-  * {
-    @apply border-border;
+export const metadata: Metadata = {
+  metadataBase: new URL('https://laithkallash.dev'),
+  title: {
+    default: 'Laith Kallash — Senior Flutter Developer & Mobile Engineer',
+    template: '%s | Laith Kallash'
+  },
+  description: 'Senior Flutter Developer building high-performance, cross-platform mobile applications with Flutter & Dart. Clean Architecture, Firebase, REST APIs, and modern UI.',
+  keywords: [
+    'Flutter Developer',
+    'Senior Flutter Developer',
+    'Mobile Application Developer',
+    'Flutter Engineer',
+    'Flutter Freelancer',
+    'Flutter Developer Syria',
+    'Dart Developer',
+    'Cross Platform Developer',
+    'Flutter Consultant',
+    'Mobile App Developer'
+  ],
+  authors: [{ name: 'Laith Kallash' }],
+  creator: 'Laith Kallash',
+  publisher: 'Laith Kallash',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    alternateLocale: 'ar_SA',
+    url: 'https://laithkallash.dev',
+    title: 'Laith Kallash — Senior Flutter Developer & Mobile Engineer',
+    description: 'Building high-performance, cross-platform mobile applications with Flutter & Dart.',
+    siteName: 'Laith Kallash Portfolio',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Laith Kallash — Senior Flutter Developer'
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Laith Kallash — Senior Flutter Developer',
+    description: 'Building high-performance, cross-platform mobile applications with Flutter & Dart.',
+    images: ['/og-image.jpg'],
+    creator: '@laithkallash'
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1
+    }
+  },
+  verification: {
+    google: 'your-google-verification-code'
+  },
+  alternates: {
+    canonical: 'https://laithkallash.dev',
+    languages: {
+      'en': 'https://laithkallash.dev',
+      'ar': 'https://laithkallash.dev/ar'
+    }
   }
+};
 
-  body {
-    @apply bg-[#0a0e14] text-[#e8f4ff] font-sans antialiased;
-    background-image: 
-      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-    background-size: 64px 64px;
-  }
-
-  ::selection {
-    @apply bg-[#27c6da]/30 text-white;
-  }
-}
-
-@layer components {
-  .glass {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10;
-  }
-
-  .glass-hover {
-    @apply transition-all duration-300 hover:bg-white/10 hover:border-[#27c6da]/30;
-  }
-
-  .gradient-text {
-    @apply bg-gradient-to-r from-[#27c6da] via-[#0468d7] to-[#7c5cfc] bg-clip-text text-transparent;
-  }
-
-  .section-title {
-    @apply font-display text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight;
-  }
-
-  .section-subtitle {
-    @apply text-[#9aa7b8] text-lg leading-relaxed max-w-2xl;
-  }
-
-  .chip {
-    @apply px-4 py-2 rounded-lg border border-white/10 bg-white/5 text-sm font-medium
-    transition-all duration-300 hover:border-[#27c6da]/40 hover:bg-[#27c6da]/10 hover:-translate-y-0.5;
-  }
-
-  .btn-primary {
-    @apply inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold
-    bg-gradient-to-r from-[#27c6da] to-[#0468d7] text-[#04101f]
-    transition-all duration-300 hover:shadow-[0_12px_28px_rgba(4,104,215,0.35)] hover:-translate-y-0.5;
-  }
-
-  .btn-secondary {
-    @apply inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold
-    border border-white/10 text-white bg-white/5
-    transition-all duration-300 hover:border-[#27c6da]/40 hover:bg-[#27c6da]/10 hover:-translate-y-0.5;
-  }
-
-  .container-custom {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
-  }
-}
-
-@layer utilities {
-  .rtl {
-    direction: rtl;
-  }
-  
-  .ltr {
-    direction: ltr;
-  }
-
-  .text-balance {
-    text-wrap: balance;
-  }
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en" dir="ltr" className={`${inter.variable} ${cairo.variable} ${jetbrains.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Person',
+              name: 'Laith Kallash',
+              jobTitle: 'Senior Flutter Developer & Mobile Engineer',
+              url: 'https://laithkallash.dev',
+              sameAs: [
+                'https://www.linkedin.com/in/laith-kalash-3635b5254',
+                'https://github.com/laithkallash',
+                'https://www.instagram.com/flutterwithlaith',
+                'https://www.tiktok.com/@laithtech'
+              ],
+              knowsAbout: [
+                'Flutter',
+                'Dart',
+                'Mobile App Development',
+                'Cross Platform Development',
+                'Firebase',
+                'REST APIs',
+                'Clean Architecture',
+                'State Management'
+              ],
+              alumniOf: {
+                '@type': 'EducationalOrganization',
+                name: 'University of Aleppo'
+              },
+              worksFor: {
+                '@type': 'Organization',
+                name: 'OCTO Tech'
+              }
+            })
+          }}
+        />
+      </head>
+      <body className="min-h-screen bg-[#0a0e14] text-[#e8f4ff] font-sans antialiased">
+        <LanguageProvider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </LanguageProvider>
+      </body>
+    </html>
+  );
 }
