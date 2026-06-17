@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://laithkallash.dev/sitemap.xml
