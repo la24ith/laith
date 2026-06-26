@@ -13,7 +13,7 @@ export default function Experience() {
       type: 'primary',
       icon: Code2,
       title: t('experience.octo'),
-      period: '2023 - Present',
+      period: '2026 - Present',
       description: t('experience.octo.desc'),
       responsibilities: t('experience.octo.responsibilities'),
       badge: t('experience.current'),
@@ -22,7 +22,7 @@ export default function Experience() {
       type: 'secondary',
       icon: Shield,
       title: t('experience.qa'),
-      period: '2022 - 2023',
+      period: '2026 ',
       description: 'Quality assurance and testing for mobile applications.',
       responsibilities: [
         'Manual and automated testing',
@@ -35,7 +35,7 @@ export default function Experience() {
       type: 'secondary',
       icon: Server,
       title: t('experience.it'),
-      period: '2021 - 2022',
+      period: '2025 ',
       description: 'IT support and infrastructure management.',
       responsibilities: [
         'Hardware and software troubleshooting',
