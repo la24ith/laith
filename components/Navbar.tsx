@@ -47,7 +47,7 @@ export default function Navbar() {
               LK
             </div>
             <span className="font-display font-bold text-lg tracking-tight">
-              Laith Kallash
+              Laith Kalash
             </span>
           </Link>
 
